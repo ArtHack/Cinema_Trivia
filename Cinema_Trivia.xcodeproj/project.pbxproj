@@ -10,7 +10,6 @@
 		6D5201E72C5A0DA5004E5E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */; };
 		6D5201E92C5A0DA5004E5E2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */; };
 		6D5201EB2C5A0DA5004E5E2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */; };
-		6D5201EE2C5A0DA5004E5E2B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 6D5201ED2C5A0DA5004E5E2B /* Base */; };
 		6D5201F02C5A0DA6004E5E2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */; };
 		6D5201F32C5A0DA6004E5E2B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 6D5201F22C5A0DA6004E5E2B /* Base */; };
 		6D5201FE2C5A0DA6004E5E2B /* Cinema_TriviaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201FD2C5A0DA6004E5E2B /* Cinema_TriviaTests.swift */; };
@@ -40,7 +39,6 @@
 		6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6D5201ED2C5A0DA5004E5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D5201F22C5A0DA6004E5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D5201F42C5A0DA6004E5E2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 				6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */,
 				6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */,
 				6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */,
-				6D5201EC2C5A0DA5004E5E2B /* Main.storyboard */,
 				6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */,
 				6D5201F12C5A0DA6004E5E2B /* LaunchScreen.storyboard */,
 				6D5201F42C5A0DA6004E5E2B /* Info.plist */,
@@ -233,7 +230,6 @@
 			files = (
 				6D5201F02C5A0DA6004E5E2B /* Assets.xcassets in Resources */,
 				6D5201F32C5A0DA6004E5E2B /* Base in Resources */,
-				6D5201EE2C5A0DA5004E5E2B /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +293,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6D5201EC2C5A0DA5004E5E2B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6D5201ED2C5A0DA5004E5E2B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6D5201F12C5A0DA6004E5E2B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -447,9 +435,8 @@
 				INFOPLIST_FILE = Cinema_Trivia/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,6 +444,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github-ArtHack.Cinema-Trivia";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -475,9 +466,8 @@
 				INFOPLIST_FILE = Cinema_Trivia/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -485,6 +475,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github-ArtHack.Cinema-Trivia";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
