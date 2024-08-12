@@ -15,6 +15,7 @@
 		6D5201FE2C5A0DA6004E5E2B /* Cinema_TriviaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201FD2C5A0DA6004E5E2B /* Cinema_TriviaTests.swift */; };
 		6D5202082C5A0DA6004E5E2B /* Cinema_TriviaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5202072C5A0DA6004E5E2B /* Cinema_TriviaUITests.swift */; };
 		6D52020A2C5A0DA6004E5E2B /* Cinema_TriviaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5202092C5A0DA6004E5E2B /* Cinema_TriviaUITestsLaunchTests.swift */; };
+		6D52026E2C65CBE6004E5E2B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D52026D2C65CBE6004E5E2B /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		6D5202032C5A0DA6004E5E2B /* Cinema_TriviaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Cinema_TriviaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D5202072C5A0DA6004E5E2B /* Cinema_TriviaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cinema_TriviaUITests.swift; sourceTree = "<group>"; };
 		6D5202092C5A0DA6004E5E2B /* Cinema_TriviaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cinema_TriviaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6D52026D2C65CBE6004E5E2B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +99,8 @@
 		6D5201E52C5A0DA5004E5E2B /* Cinema_Trivia */ = {
 			isa = PBXGroup;
 			children = (
-				6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */,
-				6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */,
+				6D52026C2C65CBCC004E5E2B /* Extension */,
+				6D52026B2C65CB99004E5E2B /* Common */,
 				6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */,
 				6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */,
 				6D5201F12C5A0DA6004E5E2B /* LaunchScreen.storyboard */,
@@ -122,6 +124,23 @@
 				6D5202092C5A0DA6004E5E2B /* Cinema_TriviaUITestsLaunchTests.swift */,
 			);
 			path = Cinema_TriviaUITests;
+			sourceTree = "<group>";
+		};
+		6D52026B2C65CB99004E5E2B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */,
+				6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		6D52026C2C65CBCC004E5E2B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				6D52026D2C65CBE6004E5E2B /* UIView+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +275,7 @@
 			files = (
 				6D5201EB2C5A0DA5004E5E2B /* ViewController.swift in Sources */,
 				6D5201E72C5A0DA5004E5E2B /* AppDelegate.swift in Sources */,
+				6D52026E2C65CBE6004E5E2B /* UIView+Extension.swift in Sources */,
 				6D5201E92C5A0DA5004E5E2B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
