@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6D5201E72C5A0DA5004E5E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */; };
 		6D5201E92C5A0DA5004E5E2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */; };
-		6D5201EB2C5A0DA5004E5E2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */; };
+		6D5201EB2C5A0DA5004E5E2B /* CinemaTriviaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201EA2C5A0DA5004E5E2B /* CinemaTriviaViewController.swift */; };
 		6D5201F02C5A0DA6004E5E2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */; };
 		6D5201F32C5A0DA6004E5E2B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 6D5201F22C5A0DA6004E5E2B /* Base */; };
 		6D5201FE2C5A0DA6004E5E2B /* Cinema_TriviaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5201FD2C5A0DA6004E5E2B /* Cinema_TriviaTests.swift */; };
@@ -39,7 +39,7 @@
 		6D5201E32C5A0DA5004E5E2B /* Cinema_Trivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cinema_Trivia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D5201E62C5A0DA5004E5E2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D5201E82C5A0DA5004E5E2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6D5201EA2C5A0DA5004E5E2B /* CinemaTriviaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinemaTriviaViewController.swift; sourceTree = "<group>"; };
 		6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D5201F22C5A0DA6004E5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D5201F42C5A0DA6004E5E2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 			children = (
 				6D52026C2C65CBCC004E5E2B /* Extension */,
 				6D52026B2C65CB99004E5E2B /* Common */,
-				6D5201EA2C5A0DA5004E5E2B /* ViewController.swift */,
+				6D5201EA2C5A0DA5004E5E2B /* CinemaTriviaViewController.swift */,
 				6D5201EF2C5A0DA6004E5E2B /* Assets.xcassets */,
 				6D5201F12C5A0DA6004E5E2B /* LaunchScreen.storyboard */,
 				6D5201F42C5A0DA6004E5E2B /* Info.plist */,
@@ -273,7 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D5201EB2C5A0DA5004E5E2B /* ViewController.swift in Sources */,
+				6D5201EB2C5A0DA5004E5E2B /* CinemaTriviaViewController.swift in Sources */,
 				6D5201E72C5A0DA5004E5E2B /* AppDelegate.swift in Sources */,
 				6D52026E2C65CBE6004E5E2B /* UIView+Extension.swift in Sources */,
 				6D5201E92C5A0DA5004E5E2B /* SceneDelegate.swift in Sources */,
