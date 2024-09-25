@@ -11,33 +11,15 @@ class CinemaTriviaViewController: UIViewController {
     
     private let movieRating = (3...9).randomElement()
     private var currentQuestionIndex: Int = 0
-    private let questionsAmount: Int = 10
     private var correctAnswers: Int = 0
-    private let questions: [QuizQuestion] = [
-        QuizQuestion(image: "IMG_7000", text: "Рейтинг этого фильма больше чем 6", correctAnswer: true),
-        QuizQuestion(image: "IMG_7001", text: "Рейтинг этого фильма больше чем 6", correctAnswer: false),
-        QuizQuestion(image: "profileImage", text: "Рейтинг этого фильма больше чем 6", correctAnswer: true),
-    ]
     
-    struct QuizQuestion {
-        let image: String
-        let text: String
-        let correctAnswer: Bool
-    }
+    private var questionFactory: QuestionFactoryProtocol?
+    private var currentQuestion: QuizQuestion?
+    private let questionsAmount: Int = 10
     
-    struct QuizStepViewModel {
-        let image: UIImage
-        let question: String
-        let questionNumber: String
-    }
+    private var statisticService: StatisticService?
     
-    struct QuizResultViewModel {
-        let title: String
-        let text: String
-        let buttonText: String
-    }
-    
-//    MARK: - UI
+    //    MARK: - UI
     
     private lazy var questionLabel: UILabel = {
         .configure(view: $0) { label in
@@ -49,11 +31,13 @@ class CinemaTriviaViewController: UIViewController {
     
     private lazy var counterLabel: UILabel = {
         .configure(view: $0) { label in
+            label.translatesAutoresizingMaskIntoConstraints = false
             label.text = "\(self.currentQuestionIndex + 1)/\(self.questionsAmount)"
             label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
             label.textColor = .white
         }
     }(UILabel())
+    
     
     private lazy var questionPosterImage: UIImageView = {
         .configure(view: $0) { image in
@@ -65,14 +49,11 @@ class CinemaTriviaViewController: UIViewController {
     }(UIImageView())
     
     private lazy var ratingQuestionTitleLabel: UILabel = {
-        .configure(view: $0) { [weak self] label in
-            guard let self else { return }
-            label.text = "Рейтинг этого фильма больше чем \(String(describing: self.movieRating ?? 0))?"
+        .configure(view: $0) { label in
             label.font = UIFont.systemFont(ofSize: 23, weight: .medium)
             label.numberOfLines = 0
             label.textAlignment = .center
             label.textColor = .white
-
         }
     }(UILabel())
     
@@ -85,6 +66,7 @@ class CinemaTriviaViewController: UIViewController {
             button.setTitleColor(.ctBlack, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .regular)
             button.layer.cornerRadius = 16
+            button.isEnabled = false
         }
     }(UIButton(primaryAction: yesButtonAction))
     
@@ -97,7 +79,7 @@ class CinemaTriviaViewController: UIViewController {
             button.setTitleColor(.ctBlack, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .regular)
             button.layer.cornerRadius = 16
-
+            button.isEnabled = false
         }
     }(UIButton(primaryAction: noButtonAction))
     
@@ -139,17 +121,23 @@ class CinemaTriviaViewController: UIViewController {
     }(UIStackView())
     
     
-//    MARK: - Lifecycle
+    //    MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .ctBlack
         
+        statisticService = StatisticServiceImplementation()
+        
+        let questionFactory = QuestionFactory(moviesLoader: MoviesLoader(networkClient: NetworkClient()), delegate: self)
+        self.questionFactory = questionFactory
+        
+        questionFactory.loadData()
+        
         [vStack].forEach {
             view.addSubview($0)
         }
         setupConstraint()
-        show(quiz: convert(model: questions[currentQuestionIndex]))
     }
     
     lazy var yesButtonAction = UIAction { [weak self] _ in
@@ -162,23 +150,27 @@ class CinemaTriviaViewController: UIViewController {
     
     func yesButtonTapped() {
         let givenAnswer = true
-        showAnswerResult(isCorrect: givenAnswer)
-        show(quiz: convert(model: questions[currentQuestionIndex]))
-        
+        guard let currentQuestion else { return }
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        questionFactory?.requestNextQuestion()
     }
     
     func noButtonTapped() {
         let givenAnswer = false
-        showAnswerResult(isCorrect: givenAnswer)
-        show(quiz: convert(model: questions[currentQuestionIndex]))
+        guard let currentQuestion else { return }
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        questionFactory?.requestNextQuestion()
     }
     
-//    MARK: - PrivateMethods
+    //    MARK: - PrivateMethods
     private func show(quiz step: QuizStepViewModel) {
-        let currentQuestion = questions[currentQuestionIndex]
+        guard let currentQuestion else { return }
+        
         let convert = convert(model: currentQuestion)
         questionPosterImage.image = convert.image
-            
+        counterLabel.text = "\(currentQuestionIndex + 1)/\(questionsAmount)"
+        ratingQuestionTitleLabel.text = convert.question
+        unlockButton()
     }
     
     private func show(quiz result: QuizResultViewModel) {
@@ -187,62 +179,70 @@ class CinemaTriviaViewController: UIViewController {
                                       preferredStyle: .alert)
         
         let action = UIAlertAction(title: result.buttonText,
-                                   style: .default) {[weak self] _ in
+                                   style: .default) { [weak self] _ in
             guard let self else { return }
+            
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
-            let firstQuestion = self.questions[self.currentQuestionIndex]
-            show(quiz: convert(model: firstQuestion))
+            questionFactory?.requestNextQuestion()
         }
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+        questionPosterImage.layer.borderColor = .none
     }
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        return QuizStepViewModel(image: UIImage(named: model.image) ?? UIImage(),
+        return QuizStepViewModel(image: UIImage(data: model.image) ?? UIImage(),
                                  question: model.text,
-                                 questionNumber: "\(currentQuestionIndex + 1)/ \(questionsAmount)")
+                                 questionNumber: "\(currentQuestionIndex)/\(questionsAmount)")
     }
     
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
+            statisticService?.store(correct: currentQuestionIndex, total: questionsAmount)
         }
         
         questionPosterImage.layer.borderWidth = 4
         questionPosterImage.layer.cornerRadius = 16
         questionPosterImage.layer.borderColor = isCorrect ? UIColor.green.cgColor : UIColor.red.cgColor
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
             self.showNextQuestionOrResults()
         }
     }
     
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questions.count - 1 {
-            let text = "Ваш результат \(correctAnswers) из \(questions.count)"
+        if currentQuestionIndex + 1 == questionsAmount {
+            lockButton()
+            
+            let text = """
+                       Ваш результат: \(correctAnswers) из \(questionsAmount),
+                       Количество сыгранных квизов: \(statisticService!.gamesCount),
+                       Рекорд: \(statisticService!.bestGame),
+                       Средняя точность: \(String(format: "%.2f", statisticService!.totalAccuracy))%
+                       """
             let viewModel = QuizResultViewModel(title: "Этот раунд окончен!",
                                                 text: text,
                                                 buttonText: "Сыграть ещё раз?")
             show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
-            show(quiz: convert(model: questions[currentQuestionIndex]))
+            questionPosterImage.layer.borderColor = UIColor.clear.cgColor            
         }
-        questionPosterImage.layer.borderColor = UIColor.clear.cgColor
     }
-                                 
     
     private func setupConstraint() {
         NSLayoutConstraint.activate([
-        
+            
             vStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             vStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                        
+            
             buttonStack.heightAnchor.constraint(equalToConstant: 60),
-
+            
         ])
         
         let aspectRation = NSLayoutConstraint(item: questionPosterImage,
@@ -253,5 +253,36 @@ class CinemaTriviaViewController: UIViewController {
                                               multiplier: 2/3,
                                               constant: 0)
         aspectRation.isActive = true
+    }
+    
+    private func lockButton() {
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
+    }
+    
+    private func unlockButton() {
+        yesButton.isEnabled = true
+        noButton.isEnabled = true
+    }
+}
+//MARK: - QuestionFactoryDelegate
+extension CinemaTriviaViewController: QuestionFactoryDelegate {
+    
+    func didLoadDataFromServer() {
+        questionFactory?.requestNextQuestion()
+    }
+    
+    func didFailToLoadData(with error: any Error) {
+        
+    }
+    
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        guard let question else { return }
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.show(quiz: viewModel)
+        }
     }
 }
